@@ -18,10 +18,10 @@ const io = require('socket.io')(http);
 
 const sessionStore = new MongoStore({ url: config.database, autoReconnect: true })
 
-mongoose.connect(config.database, function(err) {
-  if (err) console.log(err);
-  console.log("connected to the database");
-});
+mongoose.connect(config.database, { 
+  useMongoClient :true
+  
+}).then(() => console.log('Connected to database')).catch(err => console.log(err));
 
 app.engine('.hbs', expressHbs({ defaultLayout: 'layout', extname: '.hbs' }));
 app.set('view engine', 'hbs');
